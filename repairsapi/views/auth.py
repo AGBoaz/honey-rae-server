@@ -17,11 +17,12 @@ def login_user(request):
         request -- The full HTTP request object
     '''
     email = request.data['email']
-    password = ['password']
-
+    password = request.data['password']
+    print("login attempt")
     # Use the built-in authenticate method to verify
     # authenticate returns the user object or None if no user is found
     authenticated_user = authenticate(username=email, password=password)
+    print(email, password)
 
     # If authentication was successful, respond with their token
     if authenticated_user is not None:
