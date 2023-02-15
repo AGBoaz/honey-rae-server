@@ -32,6 +32,7 @@ class TicketView(ViewSet):
         serialized = TicketSerializer(service_tickets, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 
+
     def retrieve(self, request, pk=None):
         """Handle GET requests for single ticket
 
@@ -42,7 +43,8 @@ class TicketView(ViewSet):
         service_ticket = ServiceTicket.objects.get(pk=pk)
         serialized = TicketSerializer(service_ticket, context={'request': request})
         return Response(serialized.data, status=status.HTTP_200_OK)
-    
+
+
     def create(self, request):
         """Handle POST requests for service tickets"""
 
@@ -70,6 +72,16 @@ class TicketView(ViewSet):
 
         ticket.save()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE request for a single customer"""
+        service_ticket = ServiceTicket.objects.get(pk=pk)
+        service_ticket.delete()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+
 
 class TicketEmployeeSerializer(serializers.ModelSerializer):
     """ serializer for the employee parameter in TicketSerializer """
